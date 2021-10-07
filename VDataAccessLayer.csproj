@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <PackageVersion>1.0.0</PackageVersion>
+    <PackageVersion>1.0.1</PackageVersion>
     <PackageId>VDataAccessLayer</PackageId>
     <Version>1.0.0</Version>
     <Authors>gabrielaragon1990</Authors>

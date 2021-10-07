@@ -9,7 +9,7 @@ namespace VDataAccessLayer
     public delegate void VReadRow(VRow row);
     public delegate bool VLogicWhere(VRow row);
 
-    public class DataContext : IDisposable
+    public class VDataContext : IDisposable
     {
         #region Atributes
 
@@ -23,14 +23,31 @@ namespace VDataAccessLayer
 
         public bool IsOpen => _dbConnection?.State == ConnectionState.Open;
 
-        public DataContext(IDbConnection dbConnection)
+        #region Constructors
+
+        public VDataContext()
         {
-            _dbConnection = dbConnection;
-            /* Abre conexión en caso de no estarlo */
-            Open();
+            _dbConnection = null;
         }
 
+        public VDataContext(IDbConnection dbConnection)
+        {
+            SetDbConnection(dbConnection);
+        }
+
+        #endregion
+
         #region Public Methods
+
+        public void SetDbConnection(IDbConnection dbConnection)
+        {   //Close connection:
+            if (_dbConnection != null) Close();
+            
+            //Set new connection:
+            _dbConnection = dbConnection;
+            /* Open connection */
+            Open();
+        }
 
         public void Open()
         {
@@ -303,7 +320,7 @@ namespace VDataAccessLayer
             if (currentTransaction != null)
                 Rollback();
             Close();
-            _dbConnection.Dispose();
+            _dbConnection?.Dispose();
             _dbConnection = null;
         }
 
