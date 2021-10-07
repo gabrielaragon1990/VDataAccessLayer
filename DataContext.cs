@@ -219,7 +219,7 @@ namespace VDataAccessLayer
                 Rollback();
                 onError?.Invoke(e);
                 if (throwException)
-                    _ThrowException($"Error al intentar ejecutar la transacción, Inner: {e.Message}", e);
+                    _ThrowException($"Error trying to begin sql transaction, Inner: {e.Message}", e);
             }
             GC.Collect();
         }
@@ -240,7 +240,7 @@ namespace VDataAccessLayer
             {
                 ShowExceptionMessageInDebug(x);
                 currentTransaction = null;
-                throw x;
+                throw new Exception("Error trying to begin sql transaction, See inner exception for more details.", x);
             }
         });
 
